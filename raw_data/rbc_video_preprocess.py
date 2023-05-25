@@ -34,19 +34,19 @@ while(cap.isOpened()):
     cv2.imshow('Frame',frame)
 
     img = frame
-    cv2.imwrite('RBC_simulation/img' + str(count) + '.png', cv2.resize(img,(64,64),cv2.INTER_AREA))
+    cv2.imwrite('../datasets/RBC_simulation/img' + str(count) + '.png', cv2.resize(img,(64,64),cv2.INTER_AREA))
     count += 1
 
     img = random_rotate_image(frame, angle)
-    cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
+    cv2.imwrite('../datasets/RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
     count += 1
 
     img = cv2.flip(img,-1)
-    cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
+    cv2.imwrite('../datasets/RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
     count += 1
 
     img = cv2.flip(img,0)
-    cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
+    cv2.imwrite('../datasets/RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
     count += 1
 
     # Press Q on keyboard to  exit
@@ -56,36 +56,5 @@ while(cap.isOpened()):
   # Break the loop
   else: 
     break
-
-# Read until video is completed
-# pos_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
-# while(cap.isOpened()):
-#   # Capture frame-by-frame
-#   ret, frame = cap.read()
-#   count = 0
-#   if ret == True:
-#     # Rotate each image by a random angle
-#     angle = int(90*np.random.rand())
-    
-#     img = frame
-#     cv2.imwrite('RBC_simulation/img' + str(count) + '.png', cv2.resize(img,(64,64),cv2.INTER_AREA))
-#     count += 1
-
-#     img = random_rotate_image(frame, angle)
-#     cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
-#     count += 1
-
-#     img = cv2.flip(img,-1)
-#     cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
-#     count += 1
-
-#     img = cv2.flip(img,0)
-#     cv2.imwrite('RBC_simulation/img' + str(count) + '.png',cv2.resize(img,(64,64),cv2.INTER_AREA))
-#     count += 1
-#     if cv2.waitKey(25) & 0xFF == ord('q'):
-#       break
-
-#   else:
-#     break
 
 cap.release()
