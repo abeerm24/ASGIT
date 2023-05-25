@@ -14,4 +14,5 @@ First iteration - 25th May 2023
    - Some images were blacked out, deleted those.
    - Deleted Swiss_additional folder
 6. Deleted half of all the folders in order to reduce the no. of images
-    - 
+7. Created a file rbc_video_preprocess.py
+   - Resized the flipping rbc video online at clideo.com since direct resize using python was leading to low quality. 
