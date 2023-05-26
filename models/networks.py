@@ -172,7 +172,7 @@ def define_G(input_nc, output_nc, ngf, netG, norm='batch', use_dropout=False, in
     return init_net(net, init_type, init_gain, gpu_ids)
 
 
-def define_D(input_nc, ndf, netD, n_layers_D=3, norm='batch', init_type='normal', init_gain=0.02, gpu_ids=[], mask_size=128, s1=32, s2=16):
+def define_D(input_nc, ndf, netD, n_layers_D=3, norm='batch', init_type='normal', init_gain=0.02, gpu_ids=[], mask_size=32, s1=32, s2=16):
     """Create a discriminator
 
     Parameters:
@@ -1003,7 +1003,7 @@ class PHADiscriminator(nn.Module):
         self.model_p2 = nn.Sequential(*sequence)
         self.attn_mode = attn_mode
         self.inner_rescale = inner_rescale
-        self.mask_shape = 256
+        self.mask_shape = 64 # Original value 256
 
     def forward(self, x):
         """Standard forward."""

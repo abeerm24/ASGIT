@@ -10,7 +10,7 @@ class AttnCycleGANModel(BaseModel):
     @staticmethod
     def modify_commandline_options(parser, is_train=True):
         parser.set_defaults(no_dropout=True)  # default CycleGAN did not use dropout
-        parser.add_argument('--mask_size', type=int, default=128)
+        parser.add_argument('--mask_size', type=int, default=64)
         parser.add_argument('--s1', type=int, default=32)
         parser.add_argument('--s2', type=int, default=16)
         parser.add_argument('--concat', type=str, default='rmult')
@@ -54,7 +54,12 @@ class AttnCycleGANModel(BaseModel):
             self.netG_B = networks.define_G(4, opt.output_nc, opt.ngf, opt.netG, opt.norm,
                                             not opt.no_dropout, opt.init_type, opt.init_gain, self.gpu_ids)
 
-        self.aux_data = aux_dataset.AuxAttnDataset(3000, 3000, self.gpu_ids[0], mask_size=opt.mask_size)
+        if len(self.gpu_ids) > 0:
+            self.aux_data = aux_dataset.AuxAttnDataset(3000, 3000, self.gpu_ids[0], mask_size=opt.mask_size)
+        else: # Made this modification since gpu-id was an empty list
+            self.aux_data = aux_dataset.AuxAttnDataset(3000, 3000, "cpu", mask_size=opt.mask_size)
+
+
         self.zero_attn_holder = torch.zeros((1, 1, opt.mask_size, opt.mask_size), dtype=torch.float32).to(self.device)
         self.ones_attn_holder = torch.ones((1, 1, opt.mask_size, opt.mask_size), dtype=torch.float32).to(self.device)
         self.concat = opt.concat
