@@ -327,3 +327,7 @@
 (epoch: 3, iters: 1322, time: 0.265, data: 0.001) D_A: 0.004 G_A: 0.989 cycle_A: 0.333 idt_A: 0.000 D_B: 0.320 G_B: 0.935 cycle_B: 0.598 idt_B: 0.000 
 (epoch: 3, iters: 1422, time: 0.268, data: 0.001) D_A: 0.003 G_A: 0.917 cycle_A: 0.260 idt_A: 0.000 D_B: 0.033 G_B: 0.722 cycle_B: 0.616 idt_B: 0.000 
 ================ Training Loss (Fri May 26 14:08:59 2023) ================
+================ Training Loss (Fri May 26 19:10:55 2023) ================
+================ Training Loss (Fri May 26 19:16:43 2023) ================
+(epoch: 19, iters: 100, time: 0.277, data: 0.013) D_A: 0.249 G_A: 0.282 cycle_A: 0.672 idt_A: 0.000 D_B: 0.107 G_B: 0.844 cycle_B: 0.376 idt_B: 0.000 
+================ Training Loss (Fri May 26 19:20:25 2023) ================

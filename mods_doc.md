@@ -116,6 +116,32 @@ IndexError: self.aux_data = aux_dataset.AuxAttnDataset(3000, 3000, self.gpu_ids[
 
 11. Error: ListIndex out of range. Will try to resume training with --continue_training option in the command line
 
+12. Commented out lines 71 and 72 in train_attn.py since at a time we would be saving images of only one direction conversion, in this case A to B:
+                save_images_v3(webpage, visuals, img_path[1], aspect_ratio=1.0, width=opt.display_winsize,
+                                check_label='vis_B2A')
+
+**28th May 2023**
+
+1. Created a new dataset with 1324 smooth discoid images. Modified cytometry_rbc_preprocess.py for it. Renamed the folder to trainB.
+
+2. Based on reviewing the paper: https://www.mdpi.com/2079-9292/11/20/3360 decided to add ssim loss to enable better image generation. Added following
+   in attn_cycle_gan_model.py 
+   - line 7:    from torchvision.transforms import Grayscale
+   - line 8:    from skimage.metrics import structural_similarity
+   - line 218:  self.loss_G_A = self.criterionGAN(dis_A_res, True) + structural_similarity(Grayscale()(self.real_A),Grayscale()(self.fake_B)) 
+   - line 221:  self.loss_G_B = self.criterionGAN(dis_B_res, True) + + structural_similarity(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+3. Remember to add --preprocess "none" at the end of the command line. Run train_attn.py with the following command:
+   
+   python3 train_attn.py --netG resnet_6blocks --netD posthoc_attn --model attn_cycle_gan --concat rmult --dataroot "datasets" --preprocess "none" --name sim2synthetic_ssim
+
+4. Ran into error while computing ssim. Running now with pytorch based ssim command. Did the following modifications to attn_cycle_gan_model.py:
+   - line 7:    from torchvision.transforms import Grayscale
+   - line 8:    from torchmetrics.functional import structural_similarity_index_measure
+   - line 218:  self.loss_G_A = self.criterionGAN(dis_A_res, True) + structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B))
+   - line 221:  self.loss_G_B = self.criterionGAN(dis_B_res, True) + + structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+5. Ran into error torchmetrics not installed. Installed with pip install torchmetrics
 
 
  

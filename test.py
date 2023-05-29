@@ -32,9 +32,11 @@ from data import create_dataset
 from models import create_model
 from util.visualizer import save_images, save_images_v2
 from util import html
+import time
 
 
 if __name__ == '__main__':
+    start = time.time()
     opt = TestOptions().parse()  # get test options
     # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 1
@@ -65,3 +67,5 @@ if __name__ == '__main__':
         # save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
         save_images_v2(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
     webpage.save()  # save the HTML
+    end = time.time()
+    print(end-start)

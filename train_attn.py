@@ -67,8 +67,9 @@ if __name__ == '__main__':
                 img_path = model.get_image_paths()
                 save_images_v3(webpage, visuals, img_path[0], aspect_ratio=1.0, width=opt.display_winsize,
                                check_label='vis_A2B')
-                save_images_v3(webpage, visuals, img_path[1], aspect_ratio=1.0, width=opt.display_winsize,
-                               check_label='vis_B2A')
+
+                # save_images_v3(webpage, visuals, img_path[1], aspect_ratio=1.0, width=opt.display_winsize,
+                #                check_label='vis_B2A')
 
                 if total_iters % opt.display_freq == 0:  # display images on visdom and save images to a HTML file
                     save_result = total_iters % opt.update_html_freq == 0

@@ -4,7 +4,8 @@ from util.image_pool import ImagePool
 from .base_model import BaseModel
 from data import aux_dataset
 from . import networks
-
+from torchvision.transforms import Grayscale
+from torchmetrics.functional import structural_similarity_index_measure
 
 class AttnCycleGANModel(BaseModel):
     @staticmethod
@@ -213,10 +214,10 @@ class AttnCycleGANModel(BaseModel):
 
         dis_A_res, self.tmp_attn_A = self.netD_A(self.fake_B)
         # GAN loss D_A(G_A(A))
-        self.loss_G_A = self.criterionGAN(dis_A_res, True)
+        self.loss_G_A = self.criterionGAN(dis_A_res, True) + 0.3*structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
         dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
         # GAN loss D_B(G_B(B))
-        self.loss_G_B = self.criterionGAN(dis_B_res, True)
+        self.loss_G_B = self.criterionGAN(dis_B_res, True) + 0.3*structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
 
         # Forward cycle loss || G_B(G_A(A)) - A||
         self.loss_cycle_A = self.criterionCycle(self.rec_A, self.real_A) * lambda_A
