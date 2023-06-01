@@ -24,6 +24,7 @@ class AttnCycleGANModel(BaseModel):
 
     def __init__(self, opt):
         BaseModel.__init__(self, opt)
+        self.epoch_count = opt.epoch_count
         # specify the training losses you want to print out. The training/test scripts will call <BaseModel.get_current_losses>
         self.loss_names = ['D_A', 'G_A', 'cycle_A', 'idt_A', 'D_B', 'G_B', 'cycle_B', 'idt_B']
         # specify the images you want to save/display. The training/test scripts will call <BaseModel.get_current_visuals>
@@ -213,11 +214,26 @@ class AttnCycleGANModel(BaseModel):
             self.loss_idt_B = 0.
 
         dis_A_res, self.tmp_attn_A = self.netD_A(self.fake_B)
-        # GAN loss D_A(G_A(A))
-        self.loss_G_A = self.criterionGAN(dis_A_res, True) + 0.3*structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
-        dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
-        # GAN loss D_B(G_B(B))
-        self.loss_G_B = self.criterionGAN(dis_B_res, True) + 0.3*structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+        if self.epoch_count < 10:
+            # GAN loss D_A(G_A(A))
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) + structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) + structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+        elif self.epoch_count < 15:
+            f = torch.exp(self.epoch_count - 10)
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) + f*structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) + f*structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+        else:
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) 
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) 
 
         # Forward cycle loss || G_B(G_A(A)) - A||
         self.loss_cycle_A = self.criterionCycle(self.rec_A, self.real_A) * lambda_A

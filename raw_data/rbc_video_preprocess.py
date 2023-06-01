@@ -29,6 +29,7 @@ while(cap.isOpened()):
   if ret == True:
     
     angle = int(90*np.random.rand())
+    frame = cv2.medianBlur(frame, 5)
 
     # Display the resulting frame
     cv2.imshow('Frame',frame)

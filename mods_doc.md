@@ -144,4 +144,63 @@ IndexError: self.aux_data = aux_dataset.AuxAttnDataset(3000, 3000, self.gpu_ids[
 5. Ran into error torchmetrics not installed. Installed with pip install torchmetrics
 
 
- 
+
+**Second iteration**
+
+
+
+**30th May 2023**
+
+1. Performing quantitative analysis of the flow cytometry images dataset. Wrote the results into word file on teams.
+
+**Jun 1 2023**
+
+1. Preparing dataset of WBCs
+
+2. Have a script ready for generating WBC images, need to generate white blood cells on blender or some software
+
+3. GPU training successful! Reinstalled the NVIDIA GPU driver based on the following response on stackoverflow:
+
+https://stackoverflow.com/questions/62359175/pytorch-says-that-cuda-is-not-available-on-ubuntu
+
+n my case it worked to do as follows:
+
+remove the CUDA drivers
+
+sudo apt-get remove --purge nvidia*
+
+Then get the exact installation script of the drivers based on your distro and system from the link: https://developer.nvidia.com/cuda-downloads?target_os=Linux
+
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pinsudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600wget https://developer.download.nvidia.com/compute/cuda/12.1.1/local_installers/cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.debsudo dpkg -i cuda-repo-ubuntu2004-12-1-local_12.1.1-530.30.02-1_amd64.debsudo cp /var/cuda-repo-ubuntu2004-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/sudo apt-get updatesudo apt-get -y install cuda
+
+4. Smoothened the simulated RBC video images with medianblur 3 x 3 kernel. 
+
+5. Made the following modifications to lines 218 to 236 of attn_cycle_gan_model.py
+
+        if self.epoch_count < 10:
+            # GAN loss D_A(G_A(A))
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) + structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) + structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+        elif self.epoch_count < 15:
+            f = torch.exp(self.epoch_count - 10)
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) + f*structural_similarity_index_measure(Grayscale()(self.real_A),Grayscale()(self.fake_B)) # Added ssim between the grayscale version of the 2 images
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) + f*structural_similarity_index_measure(Grayscale()(self.real_B),Grayscale()(self.fake_A))
+
+        else:
+            self.loss_G_A = self.criterionGAN(dis_A_res, True) 
+            dis_B_res, self.tmp_attn_B = self.netD_B(self.fake_A)
+            # GAN loss D_B(G_B(B))
+            self.loss_G_B = self.criterionGAN(dis_B_res, True) 
+
+6. Ran into error: AttributeError: 'AttnCycleGANModel' object has no attribute 'epoch_count'. So defined attribute epoch_count at line 27 of attn_cycle_gan_model.py
+
+         self.epoch_count = opt.epoch_count
+
+7. Setting no. of output channels = 1 with --output_nc 1 flag in the command line
+
+8. Set shuffle=True in data/__init__.py 

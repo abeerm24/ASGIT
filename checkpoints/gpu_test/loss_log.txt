@@ -1,0 +1,17 @@
+================ Training Loss (Thu Jun  1 14:30:03 2023) ================
+(epoch: 1, iters: 100, time: 0.044, data: 0.013) D_A: 0.504 G_A: 0.768 cycle_A: 1.528 idt_A: 0.000 D_B: 0.364 G_B: 0.950 cycle_B: 1.932 idt_B: 0.000 
+(epoch: 1, iters: 200, time: 0.048, data: 0.001) D_A: 0.201 G_A: 0.564 cycle_A: 0.950 idt_A: 0.000 D_B: 0.048 G_B: 0.044 cycle_B: 0.996 idt_B: 0.000 
+(epoch: 1, iters: 300, time: 0.047, data: 0.001) D_A: 0.106 G_A: 0.465 cycle_A: 0.788 idt_A: 0.000 D_B: 0.395 G_B: 0.808 cycle_B: 0.904 idt_B: 0.000 
+(epoch: 1, iters: 400, time: 0.059, data: 0.002) D_A: 0.231 G_A: 0.484 cycle_A: 0.783 idt_A: 0.000 D_B: 0.162 G_B: 0.403 cycle_B: 0.880 idt_B: 0.000 
+(epoch: 1, iters: 500, time: 0.046, data: 0.001) D_A: 0.205 G_A: 0.361 cycle_A: 1.169 idt_A: 0.000 D_B: 0.253 G_B: 0.609 cycle_B: 0.727 idt_B: 0.000 
+(epoch: 1, iters: 600, time: 0.045, data: 0.002) D_A: 0.263 G_A: 0.461 cycle_A: 0.828 idt_A: 0.000 D_B: 0.339 G_B: 0.290 cycle_B: 0.587 idt_B: 0.000 
+(epoch: 1, iters: 700, time: 0.046, data: 0.001) D_A: 0.207 G_A: 0.633 cycle_A: 0.735 idt_A: 0.000 D_B: 0.263 G_B: 0.611 cycle_B: 0.822 idt_B: 0.000 
+(epoch: 1, iters: 800, time: 0.058, data: 0.002) D_A: 0.247 G_A: 0.582 cycle_A: 0.793 idt_A: 0.000 D_B: 0.196 G_B: 0.514 cycle_B: 0.729 idt_B: 0.000 
+(epoch: 1, iters: 900, time: 0.045, data: 0.001) D_A: 0.337 G_A: 0.202 cycle_A: 1.066 idt_A: 0.000 D_B: 0.382 G_B: 0.058 cycle_B: 0.529 idt_B: 0.000 
+(epoch: 1, iters: 1000, time: 0.045, data: 0.001) D_A: 0.205 G_A: 1.086 cycle_A: 0.693 idt_A: 0.000 D_B: 0.251 G_B: 0.544 cycle_B: 0.638 idt_B: 0.000 
+(epoch: 1, iters: 1100, time: 0.045, data: 0.001) D_A: 0.281 G_A: 0.526 cycle_A: 0.713 idt_A: 0.000 D_B: 0.218 G_B: 0.373 cycle_B: 0.733 idt_B: 0.000 
+(epoch: 1, iters: 1200, time: 0.058, data: 0.001) D_A: 0.082 G_A: 0.381 cycle_A: 0.660 idt_A: 0.000 D_B: 0.300 G_B: 0.202 cycle_B: 0.552 idt_B: 0.000 
+(epoch: 1, iters: 1300, time: 0.046, data: 0.001) D_A: 0.062 G_A: 1.116 cycle_A: 0.699 idt_A: 0.000 D_B: 0.295 G_B: 0.187 cycle_B: 0.568 idt_B: 0.000 
+(epoch: 1, iters: 1400, time: 0.046, data: 0.001) D_A: 0.203 G_A: 0.281 cycle_A: 0.600 idt_A: 0.000 D_B: 0.292 G_B: 0.714 cycle_B: 0.719 idt_B: 0.000 
+(epoch: 2, iters: 61, time: 0.045, data: 0.001) D_A: 0.163 G_A: 0.394 cycle_A: 0.624 idt_A: 0.000 D_B: 0.331 G_B: 0.171 cycle_B: 0.571 idt_B: 0.000 
+(epoch: 2, iters: 161, time: 0.063, data: 0.001) D_A: 0.142 G_A: 0.408 cycle_A: 0.699 idt_A: 0.000 D_B: 0.188 G_B: 0.352 cycle_B: 0.701 idt_B: 0.000 
